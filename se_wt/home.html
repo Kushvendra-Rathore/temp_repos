@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<style>
+    :root {
+        --bg-color: #fdfbf7;
+        --primary-brown: #a07d63;
+        --text-dark: #3e322b;
+        --text-light: #ffffff;
+    }
+    
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+        font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    /* FORCING THE NO-SCROLL RULE */
+    body, html {
+        width: 100vw;
+        height: 100vh;
+        overflow: hidden; 
+        background-color: var(--bg-color);
+        color: var(--text-dark);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
+    .container {
+        display: flex;
+        width: 95%;
+        height: 90vh;
+        max-width: 1200px;
+        background: #fff;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        position: relative;
+    }
+
+    /* Left Column - Profile */
+    .left-col {
+        width: 35%;
+        background-color: var(--primary-brown);
+        color: var(--text-light);
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+        z-index: 2;
+    }
+
+    .placeholder-photo {
+        width: 150px;
+        height: 150px;
+        border-radius: 50%;
+        background-color: #87654e;
+        border: 5px solid #fff;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-size: 0.9rem;
+        margin-bottom: 1.5rem;
+        font-weight: bold;
+    }
+
+    .left-col h1 {
+        font-size: 1.8rem;
+        margin-bottom: 0.5rem;
+    }
+    
+    .left-col h3 {
+        font-weight: 400;
+        margin-bottom: 2rem;
+        font-size: 1.1rem;
+        border-bottom: 2px solid rgba(255,255,255,0.3);
+        padding-bottom: 10px;
+    }
+
+    .skills {
+        width: 100%;
+        text-align: left;
+    }
+
+    .skills h4 {
+        background: #fff;
+        color: var(--primary-brown);
+        padding: 5px 15px;
+        border-radius: 15px;
+        display: inline-block;
+        margin-bottom: 15px;
+    }
+
+    .skills ul {
+        list-style: none;
+        font-size: 0.95rem;
+        line-height: 1.8;
+    }
+
+    /* Right Column - Content */
+    .right-col {
+        width: 65%;
+        padding: 3rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        z-index: 2;
+    }
+
+    .section-title {
+        color: var(--primary-brown);
+        font-size: 1.2rem;
+        border: 2px solid var(--primary-brown);
+        padding: 5px 20px;
+        border-radius: 20px;
+        display: inline-block;
+        margin-bottom: 15px;
+        font-weight: bold;
+    }
+
+    .project-card {
+        margin-bottom: 1.5rem;
+        border-left: 3px solid var(--primary-brown);
+        padding-left: 15px;
+    }
+
+    .project-card h3 {
+        font-size: 1.3rem;
+        margin-bottom: 5px;
+    }
+
+    .project-card p {
+        font-size: 0.95rem;
+        color: #555;
+        line-height: 1.4;
+    }
+
+    /* Shimmer Animation */
+    .shimmer-bg {
+        position: absolute;
+        top: 0; left: 0; right: 0; bottom: 0;
+        background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 70%);
+        background-size: 200% 100%;
+        animation: shimmer 4s infinite linear;
+        z-index: 1;
+        pointer-events: none;
+    }
+
+    @keyframes shimmer {
+        0% { background-position: 100% 0; }
+        100% { background-position: -100% 0; }
+    }
+</style>
+</head>
+<body>
+
+<div class="container">
+    <div class="shimmer-bg"></div>
+    
+    <!-- Left Profile Section -->
+    <div class="left-col">
+        <div class="placeholder-photo">No Photo</div>
+        <h1>Kushvendra<br>Singh Rathore</h1>
+        <h3>Software Engineering</h3>
+        
+        <div class="skills">
+            <h4>TECHNICAL SKILLS</h4>
+            <ul>
+                <li>• React.js & UI Development</li>
+                <li>• Node.js & Express.js</li>
+                <li>• MySQL & MongoDB</li>
+                <li>• System Architecture</li>
+                <li>• Problem Solving</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Right Content Section -->
+    <div class="right-col">
+        <div>
+            <div class="section-title">ABOUT ME</div>
+            <p style="margin-bottom: 20px; line-height: 1.5; color: #555;">
+                I am a logic-driven Computer Science student at KLE Tech focused on building robust, full-stack applications and solving complex algorithmic problems. I prioritize clean code and practical architecture over bloated designs.
+            </p>
+
+            <div class="section-title">FEATURED PROJECT</div>
+            <div class="project-card">
+                <h3>KLX – KLE Online Exchange</h3>
+                <p><strong>Role:</strong> Project Lead & Full-Stack Developer</p>
+                <p style="margin-top: 10px;">
+                    Developed a secure, campus-specific digital platform for students to buy and sell items within the college community. Engineered a multi-layered MERN stack architecture integrated with external auth and cloud storage systems. Implemented a strict FIFO queue system to handle buyer interest concurrently, ensuring fair allocation and system performance under high traffic.
+                </p>
+            </div>
+        </div>
+
+        <!-- Contact footer -->
+        <div style="display: flex; justify-content: space-between; border-top: 2px solid #eee; padding-top: 15px; font-size: 0.9rem; color: #666;">
+            <span>Roll No: 01FE24BCS104</span>
+            <span>Hubballi, India</span>
+        </div>
+    </div>
+</div>
+
+</body>
+</html>
