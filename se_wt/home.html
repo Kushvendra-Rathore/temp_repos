@@ -5,12 +5,11 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     :root {
-        --bg-main: #f5f2ee; /* Light cream background */
-        --bg-dark: #3a312b; /* Deep brown for hero/footer */
-        --primary-accent: #a07d63; /* Greta Mae brown */
-        --text-dark: #2c2420;
-        --text-light: #fdfbf7;
-        --card-bg: #ffffff;
+        --bg-main: #faf8f5; /* Lighter cream */
+        --primary-brown: #a07d63; /* Greta Mae accent */
+        --secondary-brown: #d9cec6; /* Soft background shapes */
+        --text-dark: #3a2e28;
+        --text-light: #ffffff;
     }
 
     * {
@@ -23,357 +22,408 @@
     body {
         background-color: var(--bg-main);
         color: var(--text-dark);
-        line-height: 1.6;
+        line-height: 1.7;
         overflow-x: hidden;
     }
 
-    /* Animations */
-    @keyframes fadeUp {
-        from { opacity: 0; transform: translateY(30px); }
-        to { opacity: 1; transform: translateY(0); }
+    /* SCROLL ANIMATION */
+    .reveal {
+        opacity: 0;
+        transform: translateY(40px);
+        transition: all 0.8s cubic-bezier(0.2, 0.8, 0.2, 1);
+    }
+    .reveal.active {
+        opacity: 1;
+        transform: translateY(0);
     }
 
-    .animate {
-        animation: fadeUp 0.8s ease-out forwards;
-        opacity: 0; /* starts hidden */
-    }
-    
-    .delay-1 { animation-delay: 0.2s; }
-    .delay-2 { animation-delay: 0.4s; }
-    .delay-3 { animation-delay: 0.6s; }
-
-    /* Hero Section */
+    /* HERO SECTION (Editorial Style) */
     .hero {
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-        padding: 5rem 10%;
+        position: relative;
+        padding: 8rem 10% 6rem;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .hero-bg-shape {
+        position: absolute;
+        top: -10%;
+        right: -5%;
+        width: 300px;
+        height: 400px;
+        background-color: var(--secondary-brown);
+        border-radius: 200px 0 0 200px;
+        z-index: -1;
+        opacity: 0.6;
     }
 
     .hero-tag {
-        font-size: 0.8rem;
+        font-size: 0.85rem;
+        font-weight: 600;
         text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--primary-accent);
-        border: 1px solid var(--primary-accent);
-        padding: 4px 10px;
-        display: inline-block;
-        margin-bottom: 1rem;
+        letter-spacing: 3px;
+        color: var(--primary-brown);
+        margin-bottom: 1.5rem;
     }
 
     .hero h1 {
-        font-size: 3.5rem;
+        font-size: 4rem;
         font-family: 'Georgia', serif;
-        margin-bottom: 1rem;
-        color: var(--text-light);
+        color: var(--text-dark);
+        line-height: 1.1;
+        margin-bottom: 1.5rem;
     }
 
     .hero p {
         font-size: 1.1rem;
         max-width: 600px;
-        color: #d1c8c1;
+        color: #665952;
     }
 
-    /* Section Wrappers */
+    /* SECTION STANDARDS */
     .section {
-        padding: 4rem 10%;
-    }
-
-    .section-header {
-        margin-bottom: 2rem;
-    }
-
-    .section-label {
-        font-size: 0.75rem;
-        text-transform: uppercase;
-        letter-spacing: 2px;
-        color: var(--primary-accent);
-        font-weight: bold;
+        padding: 5rem 10%;
     }
 
     .section-title {
         font-size: 2.5rem;
         font-family: 'Georgia', serif;
         color: var(--text-dark);
-        border-bottom: 3px solid var(--primary-accent);
-        display: inline-block;
-        padding-bottom: 5px;
+        margin-bottom: 3rem;
+        display: flex;
+        align-items: center;
+        gap: 15px;
     }
 
-    /* Grid Layouts */
-    .grid-2 {
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
+    .section-title::after {
+        content: "";
+        height: 2px;
+        flex-grow: 1;
+        background-color: var(--secondary-brown);
     }
 
-    .grid-3 {
-        display: grid;
-        grid-template-columns: repeat(3, 1fr);
-        gap: 20px;
+    /* ABOUT SECTION (Flow Layout) */
+    .about-container {
+        display: flex;
+        gap: 4rem;
+        align-items: flex-start;
     }
 
-    /* Cards */
-    .card {
-        background: var(--card-bg);
+    .about-text {
+        flex: 1;
+        font-size: 1.05rem;
+        color: #554a43;
+    }
+
+    .about-stats {
+        flex: 0.4;
+        background: #fff;
         padding: 2rem;
-        border-top: 4px solid var(--primary-accent);
-        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+        border-radius: 0 40px 0 40px; /* Greta Mae style corners */
+        box-shadow: 0 10px 30px rgba(0,0,0,0.04);
+        border: 1px solid var(--secondary-brown);
     }
 
-    .card h3 {
-        font-size: 1.2rem;
+    .stat-block {
+        margin-bottom: 1.5rem;
+    }
+    
+    .stat-block h4 {
+        color: var(--primary-brown);
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        margin-bottom: 0.5rem;
+    }
+
+    /* SKILLS SECTION (Pill Layout) */
+    .skills-wrapper {
+        background-color: #fff;
+        padding: 4rem;
+        border-radius: 20px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+    }
+
+    .skill-category {
+        margin-bottom: 2rem;
+    }
+
+    .skill-category h3 {
         font-family: 'Georgia', serif;
+        font-size: 1.3rem;
         margin-bottom: 1rem;
         color: var(--text-dark);
     }
 
-    .card p {
-        font-size: 0.95rem;
-        color: #555;
-        margin-bottom: 1.5rem;
-    }
-
-    .tags {
+    .skill-tags {
         display: flex;
-        gap: 10px;
         flex-wrap: wrap;
+        gap: 12px;
     }
 
-    .tag {
-        background: var(--bg-main);
-        color: var(--bg-dark);
-        font-size: 0.8rem;
-        padding: 4px 12px;
-        border-radius: 4px;
-        border: 1px solid #e2ddd7;
+    .pill {
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        padding: 8px 20px;
+        border-radius: 30px;
+        font-size: 0.9rem;
+        border: 1px solid var(--secondary-brown);
+        transition: all 0.3s ease;
     }
 
-    /* Project Cards Specific */
-    .project-header {
-        background-color: var(--bg-dark);
-        color: var(--text-light);
-        padding: 1.5rem;
+    .pill:hover {
+        background-color: var(--primary-brown);
+        color: #fff;
+        border-color: var(--primary-brown);
+        transform: translateY(-3px);
+    }
+
+    /* PROJECTS SECTION (Alternating Editorial Layout) */
+    .project-row {
         display: flex;
-        justify-content: space-between;
+        gap: 3rem;
+        margin-bottom: 5rem;
         align-items: center;
     }
-    
-    .project-header h3 {
-        color: var(--text-light);
-        margin: 0;
+
+    .project-row:nth-child(even) {
+        flex-direction: row-reverse;
     }
 
-    .project-body {
-        background: var(--card-bg);
-        padding: 2rem;
-        border: 1px solid #e2ddd7;
-        border-top: none;
-    }
-
-    .status-tag {
-        background: var(--primary-accent);
-        color: #fff;
-        font-size: 0.7rem;
-        padding: 4px 8px;
-        letter-spacing: 1px;
-    }
-
-    /* Footer */
-    .footer {
-        background-color: var(--bg-dark);
-        color: var(--text-light);
+    .project-number {
+        font-family: 'Georgia', serif;
+        font-size: 5rem;
+        color: var(--secondary-brown);
+        font-weight: bold;
+        line-height: 1;
+        flex: 0.2;
         text-align: center;
-        padding: 4rem 10%;
     }
 
-    .footer h2 {
+    .project-content {
+        flex: 1;
+        background: #fff;
+        padding: 3rem;
+        border-radius: 20px;
+        border-left: 4px solid var(--primary-brown);
+        box-shadow: 0 10px 30px rgba(0,0,0,0.03);
+        transition: transform 0.3s ease;
+    }
+
+    .project-row:nth-child(even) .project-content {
+        border-left: none;
+        border-right: 4px solid var(--primary-brown);
+    }
+
+    .project-content:hover {
+        transform: translateY(-5px);
+    }
+
+    .project-content h3 {
+        font-size: 1.8rem;
         font-family: 'Georgia', serif;
         margin-bottom: 1rem;
     }
 
-    .footer p {
-        color: #d1c8c1;
-        margin-bottom: 2rem;
-        font-size: 0.9rem;
+    .project-content p {
+        color: #665952;
+        margin-bottom: 1.5rem;
+    }
+
+    /* FOOTER */
+    .footer {
+        background-color: var(--text-dark);
+        color: var(--bg-main);
+        padding: 5rem 10% 2rem;
+        text-align: center;
+        margin-top: 2rem;
+    }
+
+    .footer h2 {
+        font-family: 'Georgia', serif;
+        font-size: 2.5rem;
+        margin-bottom: 1rem;
     }
 
     .footer-links {
         display: flex;
         justify-content: center;
-        gap: 15px;
-        margin-bottom: 3rem;
+        gap: 20px;
+        margin: 2.5rem 0;
     }
 
     .btn {
-        border: 1px solid var(--primary-accent);
-        color: var(--text-light);
-        padding: 8px 25px;
+        display: inline-block;
+        border: 2px solid var(--primary-brown);
+        color: var(--bg-main);
+        padding: 12px 35px;
+        border-radius: 30px;
         text-decoration: none;
-        transition: 0.3s;
-        cursor: pointer;
-        background: transparent;
+        font-weight: 600;
+        letter-spacing: 1px;
+        transition: all 0.3s ease;
     }
 
     .btn:hover {
-        background: var(--primary-accent);
+        background-color: var(--primary-brown);
+        color: #fff;
     }
 
-    .footer-bottom {
+    .copyright {
+        margin-top: 3rem;
         border-top: 1px solid rgba(255,255,255,0.1);
-        padding-top: 2rem;
-        font-size: 0.8rem;
-        color: #888;
+        padding-top: 1.5rem;
+        font-size: 0.85rem;
+        color: #999;
     }
 
     /* Responsive */
-    @media (max-width: 768px) {
-        .grid-2, .grid-3 { grid-template-columns: 1fr; }
-        .hero h1 { font-size: 2.5rem; }
+    @media (max-width: 900px) {
+        .about-container, .project-row { flex-direction: column; }
+        .project-row:nth-child(even) { flex-direction: column; }
+        .hero h1 { font-size: 3rem; }
+        .project-number { display: none; }
     }
 </style>
 </head>
 <body>
 
-    <!-- HERO SECTION -->
-    <section class="hero animate">
-        <div class="hero-tag">CS Student | 01FE24BCS104</div>
-        <h1>Kushvendra Singh Rathore</h1>
-        <p>I am a logic-driven Computer Science student at KLE Tech who loves solving complex algorithmic challenges, building robust full-stack web applications, and engineering secure backend systems.</p>
+    <!-- HERO -->
+    <section class="hero reveal active">
+        <div class="hero-bg-shape"></div>
+        <div class="hero-tag">Computer Science & Engineering</div>
+        <h1>Kushvendra<br>Singh Rathore</h1>
+        <p>I build efficient, secure, and highly scalable software systems. I prioritize clean logic, practical architecture, and writing code that actually solves real-world problems.</p>
     </section>
 
-    <!-- ABOUT SECTION -->
-    <section class="section">
-        <div class="section-header animate delay-1">
-            <div class="section-label">Introduction</div>
-            <h2 class="section-title">About Me</h2>
-        </div>
-        
-        <div class="grid-2 animate delay-1">
-            <div class="card">
-                <h3>Background</h3>
-                <p>I'm a B.E. Computer Science & Engineering student at KLE Technological University in Hubballi. I spend my time writing clean code and analyzing time complexities to build efficient software.</p>
+    <!-- ABOUT -->
+    <section class="section reveal">
+        <h2 class="section-title">Professional Profile</h2>
+        <div class="about-container">
+            <div class="about-text">
+                <p style="margin-bottom: 1.5rem;">I am a B.E. student at KLE Technological University in Hubballi, intensely focused on backend architecture and full-stack development. I don't believe in bloated software; I believe in optimizing time complexity, securing data, and designing systems that can handle real stress.</p>
+                <p>Beyond standard coursework, I actively engage in competitive programming (Codeforces, LeetCode) and stay updated on high-performance technology hardware. My approach to engineering is straightforward: analyze the problem, define the constraints, and engineer the most logical solution.</p>
             </div>
-            <div class="card">
-                <h3>Interests</h3>
-                <p>When I'm not studying, I'm actively engaged in competitive programming on platforms like Codeforces and LeetCode, tracking high-performance tech hardware, and solving algorithmic puzzles.</p>
-                <div class="tags">
-                    <span class="tag">Algorithms</span>
-                    <span class="tag">Hardware</span>
-                    <span class="tag">Problem Solving</span>
+            <div class="about-stats">
+                <div class="stat-block">
+                    <h4>Current Focus</h4>
+                    <p>MERN Stack & Scalable P2P Systems</p>
                 </div>
-            </div>
-            <div class="card">
-                <h3>Current Focus</h3>
-                <p>Right now, I'm focused on system architecture and secure database management. I am utilizing the MERN stack to handle high-concurrency environments and real-world system modeling.</p>
-                <div class="tags">
-                    <span class="tag">Backend</span>
-                    <span class="tag">Databases</span>
-                    <span class="tag">System Design</span>
+                <div class="stat-block">
+                    <h4>University</h4>
+                    <p>KLE Tech, Hubballi</p>
                 </div>
-            </div>
-            <div class="card">
-                <h3>Academics</h3>
-                <p>Taking the theoretical concepts from classes like Object-Oriented Programming and applying them directly to tangible projects. No fluff, just practical application.</p>
-                <div class="tags">
-                    <span class="tag">OOP (Java)</span>
-                    <span class="tag">DBMS</span>
+                <div class="stat-block">
+                    <h4>Core Interests</h4>
+                    <p>Algorithms, Databases, System Architecture</p>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- SKILLS SECTION -->
-    <section class="section" style="background-color: #eee9e3;">
-        <div class="section-header animate delay-2">
-            <div class="section-label">Technical</div>
-            <h2 class="section-title">Skills & Toolkit</h2>
-        </div>
-
-        <div class="grid-3 animate delay-2">
-            <div class="card">
+    <!-- SKILLS -->
+    <section class="section reveal">
+        <h2 class="section-title">Technical Expertise</h2>
+        <div class="skills-wrapper">
+            <div class="skill-category">
                 <h3>Languages</h3>
-                <div class="tags">
-                    <span class="tag">C++</span>
-                    <span class="tag">Java</span>
-                    <span class="tag">Python</span>
-                    <span class="tag">JavaScript</span>
+                <div class="skill-tags">
+                    <span class="pill">C++</span>
+                    <span class="pill">Java</span>
+                    <span class="pill">Python</span>
+                    <span class="pill">JavaScript</span>
                 </div>
             </div>
-            <div class="card">
+            <div class="skill-category">
+                <h3>Backend & Databases</h3>
+                <div class="skill-tags">
+                    <span class="pill">Node.js</span>
+                    <span class="pill">Express.js</span>
+                    <span class="pill">MySQL</span>
+                    <span class="pill">MongoDB</span>
+                    <span class="pill">System Design</span>
+                </div>
+            </div>
+            <div class="skill-category" style="margin-bottom: 0;">
                 <h3>Frontend</h3>
-                <div class="tags">
-                    <span class="tag">React</span>
-                    <span class="tag">HTML5</span>
-                    <span class="tag">CSS3</span>
-                    <span class="tag">UI Design</span>
-                </div>
-            </div>
-            <div class="card">
-                <h3>Backend & DB</h3>
-                <div class="tags">
-                    <span class="tag">Node.js</span>
-                    <span class="tag">Express.js</span>
-                    <span class="tag">MySQL</span>
-                    <span class="tag">MongoDB</span>
+                <div class="skill-tags">
+                    <span class="pill">React.js</span>
+                    <span class="pill">HTML5 & CSS3</span>
+                    <span class="pill">UI/UX Logic</span>
                 </div>
             </div>
         </div>
     </section>
 
-    <!-- PROJECTS SECTION -->
-    <section class="section">
-        <div class="section-header animate delay-3">
-            <div class="section-label">Work</div>
-            <h2 class="section-title">Featured Projects</h2>
-        </div>
-
-        <div class="grid-2 animate delay-3">
-            <!-- Project 1 from PPT -->
-            <div>
-                <div class="project-header">
-                    <h3>KLX – KLE Online Exchange</h3>
-                    <span class="status-tag">FULL-STACK</span>
-                </div>
-                <div class="project-body">
-                    <p>Engineered a secure, campus-specific digital platform for students to buy and sell products within the college community[cite: 1]. Solved the problem of low trust and scattered communication in peer-to-peer transactions[cite: 1]. Implemented strict user verification through a college auth system and designed a first-come-first-serve FIFO queue to manage high demand for items fairly[cite: 1].</p>
-                    <div class="tags">
-                        <span class="tag">React</span>
-                        <span class="tag">Node.js</span>
-                        <span class="tag">System Design</span>
-                    </div>
+    <!-- PROJECTS -->
+    <section class="section reveal">
+        <h2 class="section-title">Featured Work</h2>
+        
+        <!-- Project 1 -->
+        <div class="project-row">
+            <div class="project-number">01</div>
+            <div class="project-content">
+                <h3>KLX – KLE Online Exchange</h3>
+                <p>Engineered a secure, campus-specific digital marketplace for students to buy and sell products. Designed to solve the issue of low trust in peer-to-peer transactions by strictly requiring college authentication. I implemented a robust First-In-First-Out (FIFO) queue system to fairly manage high demand for popular items, ensuring system stability even under heavy concurrent user load.</p>
+                <div class="skill-tags">
+                    <span class="pill" style="border:none; background:#f0e9e4;">MERN Stack</span>
+                    <span class="pill" style="border:none; background:#f0e9e4;">Authentication</span>
                 </div>
             </div>
+        </div>
 
-            <!-- Project 2 Context -->
-            <div>
-                <div class="project-header">
-                    <h3>Student Record Manager</h3>
-                    <span class="status-tag">DATABASE</span>
-                </div>
-                <div class="project-body">
-                    <p>Built a robust backend management system to handle asynchronous reads and SQL insertion commands. Focused on strict file operations and maintaining data integrity across the database using WampServer. Troubleshot and resolved complex routing and query execution errors.</p>
-                    <div class="tags">
-                        <span class="tag">Node.js</span>
-                        <span class="tag">MySQL</span>
-                        <span class="tag">API Dev</span>
-                    </div>
+        <!-- Project 2 -->
+        <div class="project-row reveal">
+            <div class="project-number">02</div>
+            <div class="project-content">
+                <h3>Student Record Management System</h3>
+                <p>Developed a dedicated backend infrastructure to efficiently manage student data. Focused heavily on strict file operations, handling asynchronous reads, and executing complex SQL insertion commands using WampServer. The core objective was maintaining absolute data integrity and reliable query execution.</p>
+                <div class="skill-tags">
+                    <span class="pill" style="border:none; background:#f0e9e4;">Node.js</span>
+                    <span class="pill" style="border:none; background:#f0e9e4;">MySQL</span>
+                    <span class="pill" style="border:none; background:#f0e9e4;">API Routing</span>
                 </div>
             </div>
         </div>
     </section>
 
     <!-- FOOTER -->
-    <footer class="footer">
-        <h2>Let's Connect</h2>
-        <p>Kushvendra Singh Rathore • Computer Science & Engineering</p>
+    <footer class="footer reveal">
+        <h2>Let's Build Something.</h2>
+        <p style="color: #a89f9a; max-width: 500px; margin: 0 auto;">Always open to discussing system architecture, algorithmic logic, and software engineering opportunities.</p>
+        
         <div class="footer-links">
-            <button class="btn">GitHub</button>
-            <button class="btn">Email</button>
+            <!-- UPDATED LINKS HERE -->
+            <a href="https://github.com/Kushvendra-Rathore" target="_blank" rel="noopener noreferrer" class="btn">GitHub Profile</a>
+            <a href="mailto:01fe24bcs104@kletech.ac.in" class="btn">Send an Email</a>
         </div>
-        <div class="footer-bottom">
-            Kushvendra Singh Rathore • Personal Portfolio
+        
+        <div class="copyright">
+            01FE24BCS104 • Kushvendra Singh Rathore • Personal Portfolio
         </div>
     </footer>
 
+    <!-- INTERSECTION OBSERVER FOR ANIMATIONS -->
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const reveals = document.querySelectorAll(".reveal");
+            const observer = new IntersectionObserver((entries) => {
+                entries.forEach(entry => {
+                    if (entry.isIntersecting) {
+                        entry.target.classList.add("active");
+                    }
+                });
+            }, {
+                threshold: 0.15,
+                rootMargin: "0px 0px -50px 0px"
+            });
+
+            reveals.forEach(reveal => {
+                observer.observe(reveal);
+            });
+        });
+    </script>
 </body>
 </html>
