@@ -5,12 +5,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <style>
     :root {
-        --bg-color: #fdfbf7;
-        --primary-brown: #a07d63;
-        --text-dark: #3e322b;
-        --text-light: #ffffff;
+        --bg-main: #f5f2ee; /* Light cream background */
+        --bg-dark: #3a312b; /* Deep brown for hero/footer */
+        --primary-accent: #a07d63; /* Greta Mae brown */
+        --text-dark: #2c2420;
+        --text-light: #fdfbf7;
+        --card-bg: #ffffff;
     }
-    
+
     * {
         box-sizing: border-box;
         margin: 0;
@@ -18,193 +20,360 @@
         font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
     }
 
-    /* FORCING THE NO-SCROLL RULE */
-    body, html {
-        width: 100vw;
-        height: 100vh;
-        overflow: hidden; 
-        background-color: var(--bg-color);
+    body {
+        background-color: var(--bg-main);
         color: var(--text-dark);
-        display: flex;
-        justify-content: center;
-        align-items: center;
+        line-height: 1.6;
+        overflow-x: hidden;
     }
 
-    .container {
-        display: flex;
-        width: 95%;
-        height: 90vh;
-        max-width: 1200px;
-        background: #fff;
-        border-radius: 20px;
-        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
-        overflow: hidden;
-        position: relative;
+    /* Animations */
+    @keyframes fadeUp {
+        from { opacity: 0; transform: translateY(30px); }
+        to { opacity: 1; transform: translateY(0); }
     }
 
-    /* Left Column - Profile */
-    .left-col {
-        width: 35%;
-        background-color: var(--primary-brown);
-        color: var(--text-light);
-        padding: 2rem;
-        display: flex;
-        flex-direction: column;
-        align-items: center;
-        text-align: center;
-        z-index: 2;
-    }
-
-    .placeholder-photo {
-        width: 150px;
-        height: 150px;
-        border-radius: 50%;
-        background-color: #87654e;
-        border: 5px solid #fff;
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        font-size: 0.9rem;
-        margin-bottom: 1.5rem;
-        font-weight: bold;
-    }
-
-    .left-col h1 {
-        font-size: 1.8rem;
-        margin-bottom: 0.5rem;
+    .animate {
+        animation: fadeUp 0.8s ease-out forwards;
+        opacity: 0; /* starts hidden */
     }
     
-    .left-col h3 {
-        font-weight: 400;
-        margin-bottom: 2rem;
-        font-size: 1.1rem;
-        border-bottom: 2px solid rgba(255,255,255,0.3);
-        padding-bottom: 10px;
+    .delay-1 { animation-delay: 0.2s; }
+    .delay-2 { animation-delay: 0.4s; }
+    .delay-3 { animation-delay: 0.6s; }
+
+    /* Hero Section */
+    .hero {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        padding: 5rem 10%;
     }
 
-    .skills {
-        width: 100%;
-        text-align: left;
-    }
-
-    .skills h4 {
-        background: #fff;
-        color: var(--primary-brown);
-        padding: 5px 15px;
-        border-radius: 15px;
+    .hero-tag {
+        font-size: 0.8rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--primary-accent);
+        border: 1px solid var(--primary-accent);
+        padding: 4px 10px;
         display: inline-block;
-        margin-bottom: 15px;
+        margin-bottom: 1rem;
     }
 
-    .skills ul {
-        list-style: none;
-        font-size: 0.95rem;
-        line-height: 1.8;
+    .hero h1 {
+        font-size: 3.5rem;
+        font-family: 'Georgia', serif;
+        margin-bottom: 1rem;
+        color: var(--text-light);
     }
 
-    /* Right Column - Content */
-    .right-col {
-        width: 65%;
-        padding: 3rem;
-        display: flex;
-        flex-direction: column;
-        justify-content: space-between;
-        z-index: 2;
+    .hero p {
+        font-size: 1.1rem;
+        max-width: 600px;
+        color: #d1c8c1;
+    }
+
+    /* Section Wrappers */
+    .section {
+        padding: 4rem 10%;
+    }
+
+    .section-header {
+        margin-bottom: 2rem;
+    }
+
+    .section-label {
+        font-size: 0.75rem;
+        text-transform: uppercase;
+        letter-spacing: 2px;
+        color: var(--primary-accent);
+        font-weight: bold;
     }
 
     .section-title {
-        color: var(--primary-brown);
-        font-size: 1.2rem;
-        border: 2px solid var(--primary-brown);
-        padding: 5px 20px;
-        border-radius: 20px;
+        font-size: 2.5rem;
+        font-family: 'Georgia', serif;
+        color: var(--text-dark);
+        border-bottom: 3px solid var(--primary-accent);
         display: inline-block;
-        margin-bottom: 15px;
-        font-weight: bold;
+        padding-bottom: 5px;
     }
 
-    .project-card {
-        margin-bottom: 1.5rem;
-        border-left: 3px solid var(--primary-brown);
-        padding-left: 15px;
+    /* Grid Layouts */
+    .grid-2 {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 20px;
     }
 
-    .project-card h3 {
-        font-size: 1.3rem;
-        margin-bottom: 5px;
+    .grid-3 {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 20px;
     }
 
-    .project-card p {
+    /* Cards */
+    .card {
+        background: var(--card-bg);
+        padding: 2rem;
+        border-top: 4px solid var(--primary-accent);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.03);
+    }
+
+    .card h3 {
+        font-size: 1.2rem;
+        font-family: 'Georgia', serif;
+        margin-bottom: 1rem;
+        color: var(--text-dark);
+    }
+
+    .card p {
         font-size: 0.95rem;
         color: #555;
-        line-height: 1.4;
+        margin-bottom: 1.5rem;
     }
 
-    /* Shimmer Animation */
-    .shimmer-bg {
-        position: absolute;
-        top: 0; left: 0; right: 0; bottom: 0;
-        background: linear-gradient(120deg, rgba(255,255,255,0) 30%, rgba(255,255,255,0.5) 50%, rgba(255,255,255,0) 70%);
-        background-size: 200% 100%;
-        animation: shimmer 4s infinite linear;
-        z-index: 1;
-        pointer-events: none;
+    .tags {
+        display: flex;
+        gap: 10px;
+        flex-wrap: wrap;
     }
 
-    @keyframes shimmer {
-        0% { background-position: 100% 0; }
-        100% { background-position: -100% 0; }
+    .tag {
+        background: var(--bg-main);
+        color: var(--bg-dark);
+        font-size: 0.8rem;
+        padding: 4px 12px;
+        border-radius: 4px;
+        border: 1px solid #e2ddd7;
+    }
+
+    /* Project Cards Specific */
+    .project-header {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        padding: 1.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+    
+    .project-header h3 {
+        color: var(--text-light);
+        margin: 0;
+    }
+
+    .project-body {
+        background: var(--card-bg);
+        padding: 2rem;
+        border: 1px solid #e2ddd7;
+        border-top: none;
+    }
+
+    .status-tag {
+        background: var(--primary-accent);
+        color: #fff;
+        font-size: 0.7rem;
+        padding: 4px 8px;
+        letter-spacing: 1px;
+    }
+
+    /* Footer */
+    .footer {
+        background-color: var(--bg-dark);
+        color: var(--text-light);
+        text-align: center;
+        padding: 4rem 10%;
+    }
+
+    .footer h2 {
+        font-family: 'Georgia', serif;
+        margin-bottom: 1rem;
+    }
+
+    .footer p {
+        color: #d1c8c1;
+        margin-bottom: 2rem;
+        font-size: 0.9rem;
+    }
+
+    .footer-links {
+        display: flex;
+        justify-content: center;
+        gap: 15px;
+        margin-bottom: 3rem;
+    }
+
+    .btn {
+        border: 1px solid var(--primary-accent);
+        color: var(--text-light);
+        padding: 8px 25px;
+        text-decoration: none;
+        transition: 0.3s;
+        cursor: pointer;
+        background: transparent;
+    }
+
+    .btn:hover {
+        background: var(--primary-accent);
+    }
+
+    .footer-bottom {
+        border-top: 1px solid rgba(255,255,255,0.1);
+        padding-top: 2rem;
+        font-size: 0.8rem;
+        color: #888;
+    }
+
+    /* Responsive */
+    @media (max-width: 768px) {
+        .grid-2, .grid-3 { grid-template-columns: 1fr; }
+        .hero h1 { font-size: 2.5rem; }
     }
 </style>
 </head>
 <body>
 
-<div class="container">
-    <div class="shimmer-bg"></div>
-    
-    <!-- Left Profile Section -->
-    <div class="left-col">
-        <div class="placeholder-photo">No Photo</div>
-        <h1>Kushvendra<br>Singh Rathore</h1>
-        <h3>Software Engineering</h3>
-        
-        <div class="skills">
-            <h4>TECHNICAL SKILLS</h4>
-            <ul>
-                <li>• React.js & UI Development</li>
-                <li>• Node.js & Express.js</li>
-                <li>• MySQL & MongoDB</li>
-                <li>• System Architecture</li>
-                <li>• Problem Solving</li>
-            </ul>
+    <!-- HERO SECTION -->
+    <section class="hero animate">
+        <div class="hero-tag">CS Student | 01FE24BCS104</div>
+        <h1>Kushvendra Singh Rathore</h1>
+        <p>I am a logic-driven Computer Science student at KLE Tech who loves solving complex algorithmic challenges, building robust full-stack web applications, and engineering secure backend systems.</p>
+    </section>
+
+    <!-- ABOUT SECTION -->
+    <section class="section">
+        <div class="section-header animate delay-1">
+            <div class="section-label">Introduction</div>
+            <h2 class="section-title">About Me</h2>
         </div>
-    </div>
-
-    <!-- Right Content Section -->
-    <div class="right-col">
-        <div>
-            <div class="section-title">ABOUT ME</div>
-            <p style="margin-bottom: 20px; line-height: 1.5; color: #555;">
-                I am a logic-driven Computer Science student at KLE Tech focused on building robust, full-stack applications and solving complex algorithmic problems. I prioritize clean code and practical architecture over bloated designs.
-            </p>
-
-            <div class="section-title">FEATURED PROJECT</div>
-            <div class="project-card">
-                <h3>KLX – KLE Online Exchange</h3>
-                <p><strong>Role:</strong> Project Lead & Full-Stack Developer</p>
-                <p style="margin-top: 10px;">
-                    Developed a secure, campus-specific digital platform for students to buy and sell items within the college community. Engineered a multi-layered MERN stack architecture integrated with external auth and cloud storage systems. Implemented a strict FIFO queue system to handle buyer interest concurrently, ensuring fair allocation and system performance under high traffic.
-                </p>
+        
+        <div class="grid-2 animate delay-1">
+            <div class="card">
+                <h3>Background</h3>
+                <p>I'm a B.E. Computer Science & Engineering student at KLE Technological University in Hubballi. I spend my time writing clean code and analyzing time complexities to build efficient software.</p>
+            </div>
+            <div class="card">
+                <h3>Interests</h3>
+                <p>When I'm not studying, I'm actively engaged in competitive programming on platforms like Codeforces and LeetCode, tracking high-performance tech hardware, and solving algorithmic puzzles.</p>
+                <div class="tags">
+                    <span class="tag">Algorithms</span>
+                    <span class="tag">Hardware</span>
+                    <span class="tag">Problem Solving</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Current Focus</h3>
+                <p>Right now, I'm focused on system architecture and secure database management. I am utilizing the MERN stack to handle high-concurrency environments and real-world system modeling.</p>
+                <div class="tags">
+                    <span class="tag">Backend</span>
+                    <span class="tag">Databases</span>
+                    <span class="tag">System Design</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Academics</h3>
+                <p>Taking the theoretical concepts from classes like Object-Oriented Programming and applying them directly to tangible projects. No fluff, just practical application.</p>
+                <div class="tags">
+                    <span class="tag">OOP (Java)</span>
+                    <span class="tag">DBMS</span>
+                </div>
             </div>
         </div>
+    </section>
 
-        <!-- Contact footer -->
-        <div style="display: flex; justify-content: space-between; border-top: 2px solid #eee; padding-top: 15px; font-size: 0.9rem; color: #666;">
-            <span>Roll No: 01FE24BCS104</span>
-            <span>Hubballi, India</span>
+    <!-- SKILLS SECTION -->
+    <section class="section" style="background-color: #eee9e3;">
+        <div class="section-header animate delay-2">
+            <div class="section-label">Technical</div>
+            <h2 class="section-title">Skills & Toolkit</h2>
         </div>
-    </div>
-</div>
+
+        <div class="grid-3 animate delay-2">
+            <div class="card">
+                <h3>Languages</h3>
+                <div class="tags">
+                    <span class="tag">C++</span>
+                    <span class="tag">Java</span>
+                    <span class="tag">Python</span>
+                    <span class="tag">JavaScript</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Frontend</h3>
+                <div class="tags">
+                    <span class="tag">React</span>
+                    <span class="tag">HTML5</span>
+                    <span class="tag">CSS3</span>
+                    <span class="tag">UI Design</span>
+                </div>
+            </div>
+            <div class="card">
+                <h3>Backend & DB</h3>
+                <div class="tags">
+                    <span class="tag">Node.js</span>
+                    <span class="tag">Express.js</span>
+                    <span class="tag">MySQL</span>
+                    <span class="tag">MongoDB</span>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- PROJECTS SECTION -->
+    <section class="section">
+        <div class="section-header animate delay-3">
+            <div class="section-label">Work</div>
+            <h2 class="section-title">Featured Projects</h2>
+        </div>
+
+        <div class="grid-2 animate delay-3">
+            <!-- Project 1 from PPT -->
+            <div>
+                <div class="project-header">
+                    <h3>KLX – KLE Online Exchange</h3>
+                    <span class="status-tag">FULL-STACK</span>
+                </div>
+                <div class="project-body">
+                    <p>Engineered a secure, campus-specific digital platform for students to buy and sell products within the college community[cite: 1]. Solved the problem of low trust and scattered communication in peer-to-peer transactions[cite: 1]. Implemented strict user verification through a college auth system and designed a first-come-first-serve FIFO queue to manage high demand for items fairly[cite: 1].</p>
+                    <div class="tags">
+                        <span class="tag">React</span>
+                        <span class="tag">Node.js</span>
+                        <span class="tag">System Design</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Project 2 Context -->
+            <div>
+                <div class="project-header">
+                    <h3>Student Record Manager</h3>
+                    <span class="status-tag">DATABASE</span>
+                </div>
+                <div class="project-body">
+                    <p>Built a robust backend management system to handle asynchronous reads and SQL insertion commands. Focused on strict file operations and maintaining data integrity across the database using WampServer. Troubleshot and resolved complex routing and query execution errors.</p>
+                    <div class="tags">
+                        <span class="tag">Node.js</span>
+                        <span class="tag">MySQL</span>
+                        <span class="tag">API Dev</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer class="footer">
+        <h2>Let's Connect</h2>
+        <p>Kushvendra Singh Rathore • Computer Science & Engineering</p>
+        <div class="footer-links">
+            <button class="btn">GitHub</button>
+            <button class="btn">Email</button>
+        </div>
+        <div class="footer-bottom">
+            Kushvendra Singh Rathore • Personal Portfolio
+        </div>
+    </footer>
 
 </body>
 </html>
