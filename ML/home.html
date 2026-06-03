@@ -5,7 +5,6 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>Kushvendra Singh Rathore - Portfolio</title>
 
-<!-- Import Fonts: Playfair Display (Serif) & Inter (Sans-Serif) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -20,7 +19,7 @@
         --border-color: #e2ddd7;
         --footer-bg: #3a2e28;
         --shape-bg: #ede7df;
-        --accent-red: #f0a3a3; /* Added for the reference styling */
+        --accent-red: #f0a3a3;
 
         font-family: 'Inter', system-ui, -apple-system, sans-serif;
     }
@@ -55,7 +54,7 @@
         transform: translateY(0);
     }
 
-    /* --- HERO SECTION (UPDATED) --- */
+    /* --- HERO SECTION --- */
     .hero {
         position: relative;
         padding: 4rem 0 2rem;
@@ -244,20 +243,10 @@
         margin-bottom: 5rem;
     }
 
-    .project-row.reversed { flex-direction: row-reverse; }
-
-    .project-number {
-        font-family: 'Playfair Display', serif;
-        font-weight: 800;
-        font-size: 6rem;
-        color: #e9e3db;
-        line-height: 1;
-        opacity: 0.7;
-    }
-
     .project-card-wrapper {
         position: relative;
         flex-grow: 1;
+        width: 100%;
     }
 
     .project-card-wrapper::after {
@@ -270,11 +259,6 @@
         border: 1px solid var(--primary-brown);
         border-radius: 12px;
         z-index: 1;
-    }
-
-    .project-row.reversed .project-card-wrapper::after {
-        left: auto;
-        right: 15px;
     }
 
     .project-card {
@@ -403,8 +387,7 @@
         .main-title { font-size: 2.8rem; }
         .main-title::after { width: 70%; }
         .hero-intro h2 { font-size: 2.2rem; }
-        .project-row, .project-row.reversed { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
-        .project-number { font-size: 4rem; margin-bottom: -1rem; }
+        .project-row { flex-direction: column; gap: 1.5rem; align-items: flex-start; }
     }
 </style>
 </head>
@@ -412,7 +395,6 @@
 
 <div class="container">
 
-    <!-- HERO SECTION (UPDATED) -->
     <div class="hero fade-up">
         <div class="hero-shape"></div>
         <h1 class="main-title">Machine Learning<br>Portfolio</h1>
@@ -420,17 +402,16 @@
         <div class="hero-intro">
             <h2>Hi, I'm <span class="highlight-name">Kushvendra Singh Rathore</span></h2>
             <h3>Welcome to my portfolio</h3>
-            <p>I build efficient software with a strict emphasis on algorithmic logic. I prioritize strong problem-solving fundamentals, data structures, and engineering full-stack web applications that actively address real-world constraints.</p>
+            <p>I focus on machine learning algorithms and technical computing. I prioritize statistical learning theory, data preprocessing optimizations, and evaluating classification boundaries under real-world data constraints.</p>
         </div>
     </div>
 
-    <!-- PROFILE SECTION -->
     <div class="fade-up">
         <div class="section-header"><h2>Professional Profile</h2></div>
         <div class="profile-grid">
             <div class="profile-text">
-                <p>I am a Computer Science student at KLE Technological University in Hubballi, originally from Gujarat. After mastering the fundamentals of C, I have fully transitioned to C++ as my primary language to build a foundation in Data Structures and Algorithms.</p>
-                <p>Beyond competitive programming, I am expanding my scope into full-stack web development, specifically engineering responsive applications using React and Node.js. Concurrently, I am deeply focused on professional communication, actively working to achieve high-level fluency in English to articulate complex technical concepts clearly.</p>
+                <p>I am a Computer Science student at KLE Technological University in Hubballi, originally from Gujarat. After mastering foundational programming structures, I transitioned to engineering pipelines that derive empirical mathematical insight from high-dimensional datasets.</p>
+                <p>My work centers on statistical learning theory, feature engineering, and geometric optimization. I focus heavily on unpacking the underlying mathematics of linear classifiers and probabilistic structures, establishing robust validation frameworks to audit models against over-fitting and data noise.</p>
             </div>
             <div class="profile-box">
                 <h4>Academic Degree</h4>
@@ -440,99 +421,69 @@
                 <p>KLE Technological University, Hubballi</p>
 
                 <h4>Engineering Approach</h4>
-                <p style="margin-bottom: 0;">Logic-driven, scalable, and practical problem solving.</p>
+                <p style="margin-bottom: 0;">Math-driven, statistically rigorous, and transparent algorithm deployment.</p>
             </div>
         </div>
     </div>
 
-    <!-- TECHNICAL EXPERTISE -->
     <div class="fade-up">
         <div class="section-header"><h2>Technical Expertise</h2></div>
         <div class="expertise-card">
             
             <div class="expertise-category">
-                <h3>Programming & Logic</h3>
+                <h3>Core Foundations & Languages</h3>
                 <div class="pill-container">
+                    <span class="pill">Python</span>
                     <span class="pill">C++</span>
-                    <span class="pill">C</span>
-                    <span class="pill">Data Structures</span>
-                    <span class="pill">Algorithms (DSA)</span>
-                    <span class="pill">Competitive Programming</span>
+                    <span class="pill">Probability & Statistics</span>
+                    <span class="pill">Linear Algebra</span>
+                    <span class="pill">Multivariate Calculus</span>
                 </div>
             </div>
 
             <div class="expertise-category">
-                <h3>Web Development</h3>
+                <h3>Machine Learning Frameworks</h3>
                 <div class="pill-container">
-                    <span class="pill">React.js</span>
-                    <span class="pill">Vite</span>
-                    <span class="pill">JavaScript</span>
-                    <span class="pill">HTML & CSS</span>
-                    <span class="pill">React Router</span>
+                    <span class="pill">Scikit-Learn</span>
+                    <span class="pill">NumPy</span>
+                    <span class="pill">Pandas</span>
+                    <span class="pill">Matplotlib</span>
+                    <span class="pill">Seaborn</span>
                 </div>
             </div>
 
             <div class="expertise-category" style="margin-bottom: 0;">
-                <h3>Databases & Infrastructure</h3>
+                <h3>Methodologies & Systems</h3>
                 <div class="pill-container">
-                    <span class="pill">MySQL</span>
-                    <span class="pill">Node.js</span>
+                    <span class="pill">Natural Language Processing (NLP)</span>
+                    <span class="pill">TF-IDF Feature Space Modeling</span>
+                    <span class="pill">Hyperparameter Optimization</span>
+                    <span class="pill">Cross-Validation Testing</span>
                 </div>
             </div>
 
         </div>
     </div>
 
-    <!-- FEATURED WORK -->
     <div class="fade-up">
         <div class="section-header"><h2>Featured Work</h2></div>
         
         <div class="project-row">
-            <div class="project-number">01</div>
             <div class="project-card-wrapper">
                 <div class="project-card">
-                    <h3>KLX – KLE Online Exchange</h3>
-                    <p>Engineered a secure, campus-specific digital marketplace for students to buy and sell products. Designed to solve the issue of low trust in peer-to-peer transactions by strictly requiring college authentication. I implemented a robust First-In-First-Out (FIFO) queue system to fairly manage high demand for popular items, ensuring system stability even under heavy concurrent user load.</p>
+                    <h3>IMDb Sentiment Analysis Engine</h3>
+                    <p>Engineered an optimized natural language processing pipeline to classify large-scale film reviews. Addressed high-dimensional feature noise by implementing a Bigram TF-IDF vectorization space with sublinear frequency scaling to capture structural phrases like 'not good'. Tuned a linear decision boundary Perceptron with L2 regularization to minimize noise sensitivity, outperforming probabilistic baselines via strategic parameter adjustments and rigorous data profiling.</p>
                     <div>
-                        <span class="project-pill">MERN Stack</span>
-                        <span class="project-pill">Authentication</span>
-                        <span class="project-pill">API Routing</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-row reversed">
-            <div class="project-number">02</div>
-            <div class="project-card-wrapper">
-                <div class="project-card">
-                    <h3>DTSI Agricultural Automation</h3>
-                    <p>Developed a practical prototype project focusing on agricultural automation and storage facilities designed specifically for local vegetable vendors. Engineered a conceptual vegetable plucking bot mechanism aimed at solving real-world inefficiencies through hardware analysis and software integration.</p>
-                    <div>
-                        <span class="project-pill">Hardware/Software Integration</span>
-                        <span class="project-pill">Prototyping</span>
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <div class="project-row">
-            <div class="project-number">03</div>
-            <div class="project-card-wrapper">
-                <div class="project-card">
-                    <h3>Student Record Management System</h3>
-                    <p>Developed a dedicated backend infrastructure to efficiently manage student data. Focused heavily on strict file operations, handling asynchronous reads, and executing complex SQL insertion commands using WampServer. The core objective was maintaining absolute data integrity and reliable query execution.</p>
-                    <div>
-                        <span class="project-pill">Node.js</span>
-                        <span class="project-pill">MySQL</span>
-                        <span class="project-pill">WampServer</span>
+                        <span class="project-pill">Python</span>
+                        <span class="project-pill">Scikit-Learn</span>
+                        <span class="project-pill">NLP</span>
+                        <span class="project-pill">TF-IDF Vectorization</span>
                     </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <!-- BEYOND THE SCREEN -->
     <div class="fade-up">
         <div class="section-header"><h2>Beyond the Screen</h2></div>
         <div class="personal-grid">
@@ -547,22 +498,20 @@
         </div>
     </div>
 
-    <!-- FOOTER -->
     <footer class="footer fade-up">
         <h2>Let's Build Something.</h2>
-        <p>Always open to discussing full-stack development, algorithmic logic, competitive programming, and software engineering opportunities.</p>
+        <p>Always open to discussing machine learning frameworks, data scaling pipelines, engineering optimization metrics, and academic research collaboration.</p>
         <div class="footer-buttons">
             <a href="https://github.com/Kushvendra-Rathore" target="_blank" rel="noopener noreferrer" class="btn">GitHub Profile</a>
             <a href="https://mail.google.com/mail/?view=cm&fs=1&to=01fe24bcs104@kletech.ac.in" target="_blank" rel="noopener noreferrer" class="btn">Send an Email</a>
         </div>
         <div class="footer-bottom">
-            01FE24BCS104 • Kushvendra Singh Rathore • Personal Portfolio
+            01FE24BCS104 • Kushvendra Singh Rathore • Machine Learning Portfolio
         </div>
     </footer>
 
 </div>
 
-<!-- SCROLL ANIMATION SCRIPT -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const elements = document.querySelectorAll(".fade-up");
