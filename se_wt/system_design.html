@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>System Design & Architecture</title>
 
+<!-- Import Fonts: Playfair Display (Serif) & Inter (Sans-Serif) -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
@@ -127,7 +128,7 @@
         border-radius: 8px;
         border: 1px solid var(--border-color);
         box-shadow: 0 10px 30px rgba(0,0,0,0.04);
-        background-color: #fff; /* In case diagrams have transparent backgrounds */
+        background-color: #fff; 
     }
 
     /* --- ANIMATION --- */
@@ -156,6 +157,7 @@
         <p>Architectural blueprints and modeling diagrams for the KLX digital marketplace.</p>
     </header>
 
+    <!-- 1. CONTEXT MODEL -->
     <div class="diagram-section fade-up">
         <div class="info-card blue-border">
             <div class="icon-wrapper">
@@ -166,9 +168,11 @@
                 <p>Visualizing the system boundary of the KLX Marketplace and its strict interactions with external entities, including verified student users and authentication nodes.</p>
             </div>
         </div>
-        <img src="Context Model.png" alt="Context Model Diagram" class="diagram-img">
+        <!-- Updated to .jpg -->
+        <img src="Context Model.jpg" alt="Context Model Diagram" class="diagram-img">
     </div>
 
+    <!-- 2. SYSTEMS MODEL -->
     <div class="diagram-section fade-up">
         <div class="info-card red-border">
             <div class="icon-wrapper">
@@ -179,9 +183,11 @@
                 <p>High-level map showing the primary structural components and data flow required to handle concurrent user requests within the campus environment.</p>
             </div>
         </div>
-        <img src="Systems Model.png" alt="Systems Model Diagram" class="diagram-img">
+        <!-- Updated to .jpg -->
+        <img src="Systems Model.jpg" alt="Systems Model Diagram" class="diagram-img">
     </div>
 
+    <!-- 3. LAYERED ARCHITECTURE -->
     <div class="diagram-section fade-up">
         <div class="info-card yellow-border">
             <div class="icon-wrapper">
@@ -192,9 +198,11 @@
                 <p>Structural breakdown detailing the decoupling of the <strong>Presentation Layer</strong> (React.js), <strong>Business Logic Layer</strong> (Node.js/Express API), and <strong>Data Access Layer</strong> (MySQL).</p>
             </div>
         </div>
+        <!-- Kept as .png to match repository -->
         <img src="Layered Architecture.png" alt="Layered Architecture Diagram" class="diagram-img">
     </div>
 
+    <!-- 4. REPO ARCHITECTURE -->
     <div class="diagram-section fade-up">
         <div class="info-card grey-border">
             <div class="icon-wrapper">
@@ -205,9 +213,11 @@
                 <p>Codebase organization illustrating the version control branching strategy, directory structure, and segregation of frontend and backend environments.</p>
             </div>
         </div>
-        <img src="Repo Architecture.png" alt="Repository Architecture Diagram" class="diagram-img">
+        <!-- Updated to .jpg -->
+        <img src="Repo Architecture.jpg" alt="Repository Architecture Diagram" class="diagram-img">
     </div>
 
+    <!-- 5. SEQUENCE DIAGRAM -->
     <div class="diagram-section fade-up">
         <div class="info-card">
             <div class="icon-wrapper">
@@ -218,11 +228,13 @@
                 <p><strong>Functionality: Core Execution Logic</strong> — Detailed object interactions arranged in a strict time sequence, outlining API routing, database validation, and response generation.</p>
             </div>
         </div>
-        <img src="Sequence Diagram.png" alt="Sequence Diagram" class="diagram-img">
+        <!-- Updated to .jpg -->
+        <img src="Sequence Diagram.jpg" alt="Sequence Diagram" class="diagram-img">
     </div>
 
 </div>
 
+<!-- Scroll Animation Script -->
 <script>
     document.addEventListener("DOMContentLoaded", function() {
         const elements = document.querySelectorAll(".fade-up");
