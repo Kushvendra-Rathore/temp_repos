@@ -1,0 +1,430 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>KLX Problem Analysis & Requirements</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-main: #faf8f5; 
+        --primary-brown: #a07d63; 
+        --text-dark: #1a1513;
+        --text-muted: #665952;
+        --border-color: #e2ddd7;
+        --card-bg: #ffffff;
+        
+        /* Status & Role Accents */
+        --accent-po: #e06c75;
+        --accent-sm: #61afef;
+        --accent-dev: #d19a66;
+        --accent-critical: #c678dd;
+        --accent-high: #e06c75;
+        --accent-medium: #e5c07b;
+        
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html {
+        width: 100%;
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        line-height: 1.6;
+    }
+
+    .container {
+        max-width: 1000px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 3.5rem;
+    }
+
+    /* Typography */
+    h1 { font-weight: 800; font-size: 2.6rem; letter-spacing: -0.03em; margin-bottom: 0.5rem; }
+    .subtitle { color: var(--text-muted); font-size: 1.1rem; border-bottom: 2px solid var(--border-color); padding-bottom: 1.5rem; }
+    h2.section-heading { font-weight: 800; font-size: 1.6rem; display: flex; align-items: center; gap: 10px; margin-bottom: 1.5rem; letter-spacing: -0.01em; }
+    
+    /* SVG Icons */
+    .icon { width: 24px; height: 24px; flex-shrink: 0; color: var(--primary-brown); }
+
+    /* --- SCRUM ROLES --- */
+    .scrum-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 1.5rem;
+    }
+
+    .role-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+    
+    .role-po { border-top: 4px solid var(--accent-po); }
+    .role-sm { border-top: 4px solid var(--accent-sm); }
+    .role-dev { border-top: 4px solid var(--accent-dev); }
+
+    .role-card h3 { font-size: 1.1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .role-name { font-size: 0.95rem; font-weight: 600; margin-bottom: 1rem; }
+    .role-po .role-name { color: var(--accent-po); }
+    .role-sm .role-name { color: var(--accent-sm); }
+    .role-dev .role-name { color: var(--accent-dev); }
+
+    .role-list { list-style: none; display: flex; flex-direction: column; gap: 8px; font-size: 0.85rem; color: var(--text-muted); }
+    .role-list li::before { content: "•"; color: var(--primary-brown); font-weight: bold; margin-right: 8px; }
+
+    /* --- SPRINTS & STORIES --- */
+    .sprint-header {
+        background: var(--primary-brown);
+        color: white;
+        display: inline-block;
+        padding: 4px 12px;
+        border-radius: 20px;
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin-bottom: 1rem;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    .story-grid {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1.5rem;
+        margin-bottom: 2rem;
+    }
+
+    @media (max-width: 768px) { .story-grid { grid-template-columns: 1fr; } }
+
+    .story-card {
+        background: #fdfbf7;
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        position: relative;
+    }
+
+    .story-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 0.5rem; }
+    .story-header h4 { font-size: 1.05rem; font-weight: 700; }
+    
+    .tag { padding: 3px 8px; border-radius: 4px; font-size: 0.7rem; font-weight: 700; text-transform: uppercase; }
+    .tag-critical { background: rgba(198, 120, 221, 0.15); color: #9c27b0; }
+    .tag-high { background: rgba(224, 108, 117, 0.15); color: #d32f2f; }
+    .tag-med { background: rgba(229, 192, 123, 0.2); color: #b78a28; }
+
+    .story-desc { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 1rem; font-style: italic; }
+    .ac-title { font-size: 0.75rem; font-weight: 700; text-transform: uppercase; color: var(--text-dark); letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    
+    .ac-list { list-style: none; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px; }
+    .ac-list li { display: flex; align-items: flex-start; gap: 8px; }
+    .ac-list li svg { width: 14px; height: 14px; color: var(--accent-sm); flex-shrink: 0; margin-top: 3px; }
+
+    /* --- DETAILED ANALYSIS --- */
+    .analysis-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 1.5rem;
+        margin-bottom: 1.5rem;
+        border-left: 4px solid var(--text-dark);
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .analysis-header {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        margin-bottom: 1.2rem;
+        border-bottom: 1px solid #f0e9e4;
+        padding-bottom: 0.8rem;
+    }
+
+    .analysis-header h3 { font-size: 1.15rem; font-weight: 700; }
+    .analysis-meta { font-size: 0.8rem; color: var(--text-muted); }
+
+    .analysis-body { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; }
+    @media (max-width: 600px) { .analysis-body { grid-template-columns: 1fr; gap: 1rem; } }
+
+    .analysis-col h5 { font-size: 0.75rem; color: var(--accent-po); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 0.5rem; }
+    .analysis-col ul { list-style: none; font-size: 0.85rem; color: var(--text-muted); display: flex; flex-direction: column; gap: 6px; }
+    .analysis-col ul li::before { content: "▪"; color: var(--text-dark); margin-right: 6px; }
+
+    /* --- REQUIREMENTS (NFR & FR) --- */
+    .req-box {
+        background: #fdfbf7;
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+    }
+
+    .nfr-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+        gap: 2rem;
+    }
+
+    .nfr-item { display: flex; align-items: flex-start; gap: 12px; }
+    .nfr-icon { background: white; border: 1px solid var(--border-color); padding: 8px; border-radius: 8px; display: flex; color: var(--primary-brown); }
+    .nfr-item h4 { font-size: 1rem; font-weight: 700; margin-bottom: 0.2rem; }
+    .nfr-item p { font-size: 0.85rem; color: var(--text-muted); }
+
+    .fr-list {
+        display: grid;
+        grid-template-columns: 1fr 1fr;
+        gap: 1rem;
+        list-style: none;
+    }
+    @media (max-width: 600px) { .fr-list { grid-template-columns: 1fr; } }
+    .fr-list li { display: flex; align-items: flex-start; gap: 10px; font-size: 0.9rem; color: var(--text-dark); }
+    
+    .fr-list li svg { width: 18px; height: 18px; color: var(--accent-sm); flex-shrink: 0; margin-top: 3px; }
+
+    /* --- USE CASE DIAGRAM (NEW) --- */
+    .use-case-img {
+        width: 100%;
+        max-width: 900px;
+        height: auto;
+        display: block;
+        margin: 2rem auto 0;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+        box-shadow: 0 4px 20px rgba(0,0,0,0.03);
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    
+    <header>
+        <h1>Problem Analysis & Requirements</h1>
+        <div class="subtitle">Specifications, Architecture Planning, and Agile Methodology for KLX.</div>
+    </header>
+
+    <section>
+        <h2 class="section-heading">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path><circle cx="9" cy="7" r="4"></circle><path d="M23 21v-2a4 4 0 0 0-3-3.87"></path><path d="M16 3.13a4 4 0 0 1 0 7.75"></path></svg>
+            Scrum Roles
+        </h2>
+        <div class="scrum-grid">
+            <div class="role-card role-po">
+                <h3>Product Owner / Lead</h3>
+                <div class="role-name">Kushvendra Singh Rathore</div>
+                <ul class="role-list">
+                    <li>Define product vision & system architecture</li>
+                    <li>Prioritize the FIFO queue backlog</li>
+                    <li>Ensure MERN stack integration aligns with college needs</li>
+                </ul>
+            </div>
+            <div class="role-card role-sm">
+                <h3>Scrum Master</h3>
+                <div class="role-name">Shivraj Shegunasi</div>
+                <ul class="role-list">
+                    <li>Facilitate Scrum ceremonies</li>
+                    <li>Remove development impediments</li>
+                    <li>Ensure adherence to Agile methodologies</li>
+                </ul>
+            </div>
+            <div class="role-card role-dev">
+                <h3>Development Team</h3>
+                <div class="role-name">Sohan, Saish, Pushkar, Sufiyanraza</div>
+                <ul class="role-list">
+                    <li>Design & develop frontend/backend features</li>
+                    <li>Implement database schema and API routing</li>
+                    <li>Execute unit and integration tests</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-heading">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="8" y1="6" x2="21" y2="6"></line><line x1="8" y1="12" x2="21" y2="12"></line><line x1="8" y1="18" x2="21" y2="18"></line><line x1="3" y1="6" x2="3.01" y2="6"></line><line x1="3" y1="12" x2="3.01" y2="12"></line><line x1="3" y1="18" x2="3.01" y2="18"></line></svg>
+            Sprints & User Stories
+        </h2>
+
+        <div class="sprint-header">Sprint 1 (Auth & Setup)</div>
+        <div class="story-grid">
+            <div class="story-card">
+                <div class="story-header">
+                    <h4>User Registration (5 pts)</h4>
+                    <span class="tag tag-high">High</span>
+                </div>
+                <p class="story-desc">As a student, I want to register with my valid college email to securely access the marketplace.</p>
+                <div class="ac-title">Acceptance Criteria:</div>
+                <ul class="ac-list">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Validate only specific college email domains.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Secure password hashing via Bcrypt.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Block duplicate email registrations.</li>
+                </ul>
+            </div>
+            <div class="story-card">
+                <div class="story-header">
+                    <h4>Browse Feed (3 pts)</h4>
+                    <span class="tag tag-high">High</span>
+                </div>
+                <p class="story-desc">As a user, I want to view all available products clearly on the dashboard.</p>
+                <div class="ac-title">Acceptance Criteria:</div>
+                <ul class="ac-list">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Fetch data via GET /api/products.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Display responsive grid using CSS Grid.</li>
+                </ul>
+            </div>
+        </div>
+
+        <div class="sprint-header">Sprint 2 (Core Logic)</div>
+        <div class="story-grid">
+            <div class="story-card">
+                <div class="story-header">
+                    <h4>Demand Queue (13 pts)</h4>
+                    <span class="tag tag-critical">Critical</span>
+                </div>
+                <p class="story-desc">As a buyer, I want to express interest in an item and be placed in a fair queue.</p>
+                <div class="ac-title">Acceptance Criteria:</div>
+                <ul class="ac-list">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Implement strict First-In-First-Out logic.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Prevent users from clicking "Interest" multiple times.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Process clicks within 200ms to avoid concurrency conflicts.</li>
+                </ul>
+            </div>
+            <div class="story-card">
+                <div class="story-header">
+                    <h4>Product Posting (8 pts)</h4>
+                    <span class="tag tag-high">High</span>
+                </div>
+                <p class="story-desc">As a seller, I want to post my academic items with a price and description.</p>
+                <div class="ac-title">Acceptance Criteria:</div>
+                <ul class="ac-list">
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Form validation to reject negative prices.</li>
+                    <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Secure upload pipeline for product imagery.</li>
+                </ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h2 class="section-heading">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path><polyline points="14 2 14 8 20 8"></polyline><line x1="16" y1="13" x2="8" y2="13"></line><line x1="16" y1="17" x2="8" y2="17"></line><polyline points="10 9 9 9 8 9"></polyline></svg>
+            Detailed Story Analysis
+        </h2>
+
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <h3>User Authentication Analysis</h3>
+                <span class="analysis-meta">Sprint: 1 | Points: 5 | Dev Team</span>
+            </div>
+            <div class="analysis-body">
+                <div class="analysis-col">
+                    <h5>Task Breakdown</h5>
+                    <ul>
+                        <li><strong>Backend:</strong> API /auth/register, input validation, JWT issuance.</li>
+                        <li><strong>Frontend:</strong> Responsive login forms, React state management for tokens.</li>
+                    </ul>
+                </div>
+                <div class="analysis-col">
+                    <h5>Testing Highlights</h5>
+                    <ul>
+                        <li><strong>Negative:</strong> Reject invalid email domains and wrong passwords.</li>
+                        <li><strong>Performance:</strong> Handle simultaneous login requests efficiently.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="analysis-card">
+            <div class="analysis-header">
+                <h3>Demand Queue Implementation</h3>
+                <span class="analysis-meta">Sprint: 2 | Points: 13 | Lead / DB</span>
+            </div>
+            <div class="analysis-body">
+                <div class="analysis-col">
+                    <h5>Task Breakdown</h5>
+                    <ul>
+                        <li><strong>Backend:</strong> Build queue endpoints, implement transactional locks to prevent race conditions.</li>
+                        <li><strong>DB:</strong> Add index on timestamp for rapid FIFO sorting.</li>
+                    </ul>
+                </div>
+                <div class="analysis-col">
+                    <h5>Testing Highlights</h5>
+                    <ul>
+                        <li><strong>Positive:</strong> Queue order strictly maintained based on exact millisecond of click.</li>
+                        <li><strong>Edge Case:</strong> Handled scenario where two buyers click exactly simultaneously.</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="req-box">
+        <h2 class="section-heading" style="margin-bottom: 2rem;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"></path></svg>
+            Non-Functional Requirements
+        </h2>
+        <div class="nfr-grid" style="margin-bottom: 3.5rem;">
+            <div class="nfr-item">
+                <div class="nfr-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline></svg></div>
+                <div>
+                    <h4>Performance</h4>
+                    <p>System must process "Interested" clicks within 200ms to guarantee queue integrity.</p>
+                </div>
+            </div>
+            <div class="nfr-item">
+                <div class="nfr-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg></div>
+                <div>
+                    <h4>Security</h4>
+                    <p>Prevent unauthorized access and protect user data via Bcrypt encryption and JWT.</p>
+                </div>
+            </div>
+            <div class="nfr-item">
+                <div class="nfr-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="12 2 2 7 12 12 22 7 12 2"></polygon><polyline points="2 17 12 22 22 17"></polyline><polyline points="2 12 12 17 22 12"></polyline></svg></div>
+                <div>
+                    <h4>Scalability</h4>
+                    <p>Designed to handle thousands of concurrent student users across the campus.</p>
+                </div>
+            </div>
+            <div class="nfr-item">
+                <div class="nfr-icon"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline></svg></div>
+                <div>
+                    <h4>Reliability & Fairness</h4>
+                    <p>Maintain 99% uptime. Allocate items strictly based on FIFO rules without manipulation.</p>
+                </div>
+            </div>
+        </div>
+
+        <h2 class="section-heading" style="margin-bottom: 1.5rem; font-size: 1.4rem;">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><line x1="12" y1="8" x2="12" y2="12"></line><line x1="12" y1="16" x2="12.01" y2="16"></line></svg>
+            Functional Requirements Summary
+        </h2>
+        <ul class="fr-list">
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Register and login via secure interface using valid credentials.</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Provide form interface to add, edit, and delete product listings.</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Display dynamic grid of available products on the home page.</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Execute searches to find products based on specific keywords.</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Filter and sort products based on category and price brackets.</li>
+            <li><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg> Allow users to create, view, edit, and delete personal profiles.</li>
+        </ul>
+    </section>
+
+    <section style="margin-top: 1.5rem;">
+        <h2 class="section-heading">
+            <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect><circle cx="8.5" cy="8.5" r="1.5"></circle><polyline points="21 15 16 10 5 21"></polyline></svg>
+            Use Case Diagram
+        </h2>
+        <img src="Use Case Diagram.png" alt="KLX Use Case Diagram" class="use-case-img">
+    </section>
+
+</div>
+
+</body>
+</html>
