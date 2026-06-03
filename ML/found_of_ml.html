@@ -52,8 +52,8 @@
     /* --- ANIMATIONS --- */
     .fade-up {
         opacity: 0;
-        transform: translateY(30px);
-        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+        transform: translateY(40px);
+        transition: opacity 0.8s cubic-bezier(0.25, 0.8, 0.25, 1), transform 0.8s cubic-bezier(0.25, 0.8, 0.25, 1);
     }
     .fade-up.visible {
         opacity: 1;
@@ -92,6 +92,13 @@
         border-radius: 12px;
         padding: 3rem;
         box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .section-block:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.06);
+        border-color: var(--primary-brown);
     }
 
     .section-header-title {
@@ -119,6 +126,12 @@
         align-items: center;
         justify-content: center;
         border-radius: 4px;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), background-color 0.4s ease;
+    }
+
+    .section-block:hover .letter-badge {
+        transform: scale(1.15) rotate(5deg);
+        background-color: var(--primary-brown);
     }
 
     /* --- DATA ROWS --- */
@@ -160,6 +173,13 @@
         border-radius: 8px;
         margin-top: 0.5rem;
         overflow: hidden;
+        transition: transform 0.4s ease, box-shadow 0.4s ease, border-color 0.4s ease;
+    }
+
+    .graph-container:hover {
+        transform: scale(1.02);
+        box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        border-color: var(--primary-brown);
     }
 
     /* --- CODE WINDOW --- */
@@ -200,6 +220,12 @@
         color: #fff;
         border-radius: 12px;
         padding: 3rem;
+        transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275), box-shadow 0.4s ease;
+    }
+
+    .reflection-block:hover {
+        transform: translateY(-6px);
+        box-shadow: 0 15px 35px rgba(0,0,0,0.15);
     }
 
     .reflection-block .section-header-title {
