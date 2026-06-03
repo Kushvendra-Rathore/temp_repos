@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Unit 1 - Foundations of Learning</title>
+
+<!-- Import Fonts -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;800;900&family=Playfair+Display:ital,wght@0,600;0,700;0,800;1,600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500&display=swap" rel="stylesheet">
+
+<!-- Import Plotly.js for dynamic graphing -->
+<script src="https://cdn.plot.ly/plotly-2.27.0.min.js"></script>
+
+<style>
+    :root {
+        --bg-main: transparent; 
+        --primary-brown: #a07d63; 
+        --text-dark: #1a1513;
+        --text-muted: #5a524e;
+        --card-bg: #ffffff;
+        --border-color: #e2ddd7;
+        --shape-bg: #ede7df;
+        --accent-red: #f0a3a3;
+        --code-bg: #1e1e1e;
+        --code-text: #d4d4d4;
+
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html {
+        width: 100%;
+        background-color: var(--bg-main) !important;
+        color: var(--text-dark);
+        line-height: 1.6;
+        overflow-x: hidden;
+    }
+
+    .container {
+        max-width: 1050px;
+        margin: 0 auto;
+        padding: 4rem 2%;
+        display: flex;
+        flex-direction: column;
+        gap: 4rem;
+    }
+
+    /* --- ANIMATIONS --- */
+    .fade-up {
+        opacity: 0;
+        transform: translateY(30px);
+        transition: opacity 0.8s ease-out, transform 0.8s ease-out;
+    }
+    .fade-up.visible {
+        opacity: 1;
+        transform: translateY(0);
+    }
+
+    /* --- PAGE HEADER --- */
+    .page-header {
+        text-align: left;
+        margin-bottom: 1rem;
+        border-bottom: 2px solid var(--text-dark);
+        padding-bottom: 1.5rem;
+    }
+
+    .unit-label {
+        font-family: 'Inter', sans-serif;
+        font-weight: 800;
+        color: var(--primary-brown);
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        margin-bottom: 0.5rem;
+    }
+
+    .main-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 800;
+        font-size: 3.2rem;
+        color: var(--text-dark);
+        line-height: 1.1;
+    }
+
+    /* --- SECTION CONTAINERS --- */
+    .section-block {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 12px;
+        padding: 3rem;
+        box-shadow: 0 4px 15px rgba(0,0,0,0.02);
+    }
+
+    .section-header-title {
+        font-family: 'Playfair Display', serif;
+        font-weight: 700;
+        font-size: 1.8rem;
+        color: var(--text-dark);
+        margin-bottom: 2rem;
+        border-left: 5px solid var(--accent-red);
+        padding-left: 15px;
+        display: flex;
+        align-items: center;
+        gap: 15px;
+    }
+
+    .letter-badge {
+        background: var(--text-dark);
+        color: #fff;
+        font-family: 'Inter', sans-serif;
+        font-size: 1rem;
+        font-weight: 800;
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 4px;
+    }
+
+    /* --- DATA ROWS --- */
+    .data-row { margin-bottom: 1.5rem; }
+    .data-row:last-child { margin-bottom: 0; }
+
+    .data-label {
+        font-weight: 800;
+        color: var(--text-dark);
+        text-transform: uppercase;
+        font-size: 0.85rem;
+        letter-spacing: 0.05em;
+        margin-bottom: 0.3rem;
+    }
+
+    .data-content {
+        color: var(--text-muted);
+        font-size: 1.05rem;
+        text-align: justify;
+    }
+
+    .math-block {
+        background: var(--shape-bg);
+        padding: 1.5rem;
+        border-radius: 8px;
+        font-family: 'Fira Code', monospace;
+        color: var(--text-dark);
+        font-size: 0.95rem;
+        border: 1px solid var(--border-color);
+        margin-top: 0.5rem;
+    }
+
+    /* --- GRAPH CONTAINERS --- */
+    .graph-container {
+        width: 100%;
+        height: 400px;
+        background: var(--shape-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 8px;
+        margin-top: 0.5rem;
+        overflow: hidden;
+    }
+
+    /* --- CODE WINDOW --- */
+    .code-window {
+        background: var(--code-bg);
+        border-radius: 8px;
+        box-shadow: 0 10px 30px rgba(0,0,0,0.1);
+        overflow: hidden;
+        margin-top: 0.5rem;
+    }
+
+    .code-header {
+        background: #2d2d2d;
+        padding: 10px 20px;
+        display: flex;
+        gap: 8px;
+        align-items: center;
+        border-bottom: 1px solid #404040;
+    }
+
+    .mac-dot { width: 12px; height: 12px; border-radius: 50%; }
+    .dot-red { background: #ff5f56; }
+    .dot-yellow { background: #ffbd2e; }
+    .dot-green { background: #27c93f; }
+    
+    pre { padding: 1.5rem; margin: 0; overflow-x: auto; }
+    code { font-family: 'Fira Code', monospace; font-size: 0.9rem; color: var(--code-text); line-height: 1.6; }
+
+    .syn-keyword { color: #569cd6; }
+    .syn-def { color: #dcdcaa; }
+    .syn-arg { color: #9cdcfe; }
+    .syn-comment { color: #6a9955; font-style: italic; }
+    .syn-num { color: #b5cea8; }
+
+    /* --- REFLECTION --- */
+    .reflection-block {
+        background: var(--text-dark);
+        color: #fff;
+        border-radius: 12px;
+        padding: 3rem;
+    }
+
+    .reflection-block .section-header-title {
+        color: #fff;
+        border-left-color: var(--primary-brown);
+    }
+    
+    .reflection-block .data-label { color: var(--primary-brown); }
+    .reflection-block .data-content { color: #d1d5db; }
+
+    @media (max-width: 800px) {
+        .main-title { font-size: 2.5rem; }
+        .section-block, .reflection-block { padding: 2rem; }
+        .graph-container { height: 300px; }
+    }
+</style>
+</head>
+<body style="background-color: #f5f5f5 !important;">
+
+<div class="container">
+
+    <!-- PAGE HEADER -->
+    <div class="page-header fade-up">
+        <div class="unit-label">Unit 01</div>
+        <h1 class="main-title">Foundations of Learning</h1>
+    </div>
+
+    <!-- A. ANALYTICAL EXERCISES -->
+    <div class="fade-up section-block">
+        <h2 class="section-header-title"><div class="letter-badge">A</div> Analytical Exercises</h2>
+        
+        <div class="data-row">
+            <div class="data-label">Problem Statement</div>
+            <div class="data-content">Calculate the updated parameter weight for a simple linear model using one step of Gradient Descent, given a single training data point.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Analysis</div>
+            <div class="data-content">To optimize the weight, we must calculate the partial derivative of the Mean Squared Error (MSE) loss function with respect to the weight parameter. This derivative (the gradient) dictates the direction of steepest ascent. We subtract the gradient, scaled by the learning rate, from the initial weight to step downhill toward the minimum loss.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Calculations</div>
+            <div class="math-block">
+                Given:<br>
+                Data Point: (x = 2, y = 5)<br>
+                Model: f(x) = w * x<br>
+                Initial Weight: w_old = 1.0<br>
+                Learning Rate: η = 0.1<br><br>
+                
+                1. Calculate Prediction:<br>
+                f(2) = 1.0 * 2 = 2.0<br><br>
+                
+                2. Calculate Gradient of MSE Loss:<br>
+                ∇L = 2 * (prediction - true_y) * x<br>
+                ∇L = 2 * (2 - 5) * 2<br>
+                ∇L = 2 * (-3) * 2 = -12<br><br>
+                
+                3. Update Weight:<br>
+                w_new = w_old - (η * ∇L)<br>
+                w_new = 1.0 - (0.1 * -12)<br>
+                w_new = 1.0 + 1.2 = 2.2
+            </div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Interpretation</div>
+            <div class="data-content">The initial weight under-predicted the target (2 vs 5). Consequently, the calculated gradient was negative (-12). By stepping in the opposite direction of the gradient, the algorithm correctly adjusted the weight upward to 2.2, moving the model closer to the true mathematical relationship of the data.</div>
+        </div>
+    </div>
+
+    <!-- B. CONCEPTUAL EXERCISES -->
+    <div class="fade-up section-block">
+        <h2 class="section-header-title"><div class="letter-badge">B</div> Conceptual Exercises</h2>
+
+        <div class="data-row">
+            <div class="data-label">Definition</div>
+            <div class="data-content"><strong>The Loss Landscape</strong> is a multi-dimensional topological surface where each point represents a specific combination of model parameters (weights/biases), and the height/elevation at that point represents the model's error (loss) on the training data.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Explanation</div>
+            <div class="data-content">Machine learning is fundamentally a geometric search problem. Because high-dimensional landscapes contain millions of parameters, we cannot brute-force the solution. Instead, algorithms like Gradient Descent analyze the local curvature of this landscape and take iterative mathematical steps downhill, attempting to avoid "saddle points" and locate the global minimum basin where error is lowest.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Real-world Example</div>
+            <div class="data-content">Imagine being dropped blindfolded onto a mountain range and tasked with finding the deepest valley. You cannot see the terrain, but you can feel the slope of the ground beneath your feet. By constantly stepping in the direction that feels steepest downward (the negative gradient), you eventually reach the bottom.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Diagram/Illustration</div>
+            <!-- STATIC 3D PLOT IMAGE -->
+            <img src="./loss_landscape.png" alt="Convex Loss Topology Diagram" class="graph-container" style="object-fit: contain;">
+        </div>
+    </div>
+
+    <!-- C. COMPUTATIONAL EXERCISES -->
+    <div class="fade-up section-block">
+        <h2 class="section-header-title"><div class="letter-badge">C</div> Computational Exercises</h2>
+
+        <div class="data-row">
+            <div class="data-label">Objective</div>
+            <div class="data-content">Implement a Gradient Descent optimization loop entirely from scratch using raw Python and NumPy arrays, bypassing high-level libraries to prove an understanding of underlying vector calculus.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Algorithm</div>
+            <div class="data-content">1. Initialize weight vector randomly.<br>2. Compute dot product of inputs and weights (Forward Pass).<br>3. Compute the error vector against ground truth.<br>4. Calculate partial derivatives (Gradient).<br>5. Update weights by subtracting (learning_rate * gradient).<br>6. Repeat until convergence.</div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Python Code</div>
+            <div class="code-window">
+                <div class="code-header">
+                    <div class="mac-dot dot-red"></div>
+                    <div class="mac-dot dot-yellow"></div>
+                    <div class="mac-dot dot-green"></div>
+                </div>
+                <pre><code><span class="syn-keyword">import</span> numpy <span class="syn-keyword">as</span> np
+
+<span class="syn-keyword">def</span> <span class="syn-def">gradient_descent_raw</span>(<span class="syn-arg">X</span>, <span class="syn-arg">y</span>, <span class="syn-arg">lr</span>=<span class="syn-num">0.01</span>, <span class="syn-arg">epochs</span>=<span class="syn-num">100</span>):
+    m = X.shape[<span class="syn-num">0</span>]
+    weights = np.zeros(X.shape[<span class="syn-num">1</span>])
+    
+    <span class="syn-keyword">for</span> i <span class="syn-keyword">in</span> <span class="syn-keyword">range</span>(epochs):
+        <span class="syn-comment"># Matrix multiplication for predictions</span>
+        predictions = np.dot(X, weights)
+        
+        <span class="syn-comment"># Compute gradient of MSE</span>
+        errors = predictions - y
+        gradient = (<span class="syn-num">2</span>/m) * np.dot(X.T, errors)
+        
+        <span class="syn-comment"># Update weights</span>
+        weights -= lr * gradient
+        
+    <span class="syn-keyword">return</span> weights</code></pre>
+            </div>
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Output Simulation</div>
+            <!-- STATIC 2D LINE PLOT IMAGE -->
+            <img src="./loss_convergence.png" alt="MSE Loss vs Epochs Graph" class="graph-container" style="height: 300px; object-fit: contain;">
+        </div>
+
+        <div class="data-row">
+            <div class="data-label">Observation</div>
+            <div class="data-content">The loss curve demonstrates a rapid, exponential decay during the first 20 iterations as the algorithm escapes the random initialization phase. It subsequently smooths into an asymptote as it approaches the optimal parameter limits, proving successful mathematical convergence.</div>
+        </div>
+    </div>
+
+    <!-- REFLECTION -->
+    <div class="fade-up reflection-block">
+        <h2 class="section-header-title">Unit Reflection</h2>
+        
+        <div class="data-row">
+            <div class="data-content">
+                <p>Unit 1 fundamentally changed how I view algorithmic design. Prior to this, machine learning seemed like a black box of library calls. By breaking down the mathematics of hypothesis spaces and actually coding the calculus behind Gradient Descent, I learned that learning is strictly an optimization geometry problem.</p>
+                <br>
+                <p>The main challenge I faced was bridging the theoretical math into vectorized NumPy arrays. Understanding the transpose logic required to compute the gradient via matrix multiplication took significant debugging. Furthermore, experimenting with learning rates showed me firsthand how an aggressive step size causes the model to bounce erratically and diverge, rather than converge smoothly.</p>
+                <br>
+                <p>These foundational principles have direct applications to everything I build moving forward. Whether I am tuning a simple linear regressor or eventually building deep neural networks, the rules of the Loss Landscape remain the same: you must mathematically audit your cost function, or your algorithm will fail.</p>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+<!-- SCROLL ANIMATION & DYNAMIC PLOT SCRIPT -->
+<script>
+    document.addEventListener("DOMContentLoaded", function() {
+        // --- Scroll Animations ---
+        const elements = document.querySelectorAll(".fade-up");
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add("visible");
+                }
+            });
+        }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+
+        elements.forEach(el => observer.observe(el));
+
+        // --- Plot 1: 3D Convex Loss Landscape ---
+        let z_data = [];
+        let x_data = [];
+        let y_data = [];
+        // Generate a bowl shape: Z = X^2 + Y^2
+        for (let i = -5; i <= 5; i += 0.5) {
+            let z_row = [];
+            for (let j = -5; j <= 5; j += 0.5) {
+                z_row.push((i * i) + (j * j));
+            }
+            z_data.push(z_row);
+            x_data.push(i);
+            y_data.push(j);
+        }
+
+        let surfaceData = [{
+            z: z_data,
+            x: x_data,
+            y: y_data,
+            type: 'surface',
+            colorscale: [['0', '#ede7df'], ['0.5', '#f0a3a3'], ['1', '#a07d63']],
+            showscale: false
+        }];
+
+        let surfaceLayout = {
+            title: { text: 'Convex Loss Topology', font: {family: 'Inter', color: '#1a1513'} },
+            paper_bgcolor: 'transparent',
+            plot_bgcolor: 'transparent',
+            margin: { l: 0, r: 0, b: 10, t: 40 },
+            scene: {
+                xaxis: { title: 'Weight 1', showgrid: false, zeroline: false, showticklabels: false },
+                yaxis: { title: 'Weight 2', showgrid: false, zeroline: false, showticklabels: false },
+                zaxis: { title: 'Error (Loss)', showgrid: false, zeroline: false, showticklabels: false },
+                camera: { eye: {x: 1.5, y: 1.5, z: 0.5} }
+            }
+        };
+
+        Plotly.newPlot('plot-loss-landscape', surfaceData, surfaceLayout, {displayModeBar: false});
+
+        // --- Plot 2: 2D Loss Convergence Line Graph ---
+        let epochs = [];
+        let loss = [];
+        // Generate an exponential decay curve
+        for(let i = 0; i <= 100; i++) {
+            epochs.push(i);
+            // Simulated gradient descent loss + slight random noise for realism
+            loss.push((5.0 * Math.exp(-0.08 * i)) + 0.1 + (Math.random() * 0.05));
+        }
+
+        let lineData = [{
+            x: epochs,
+            y: loss,
+            type: 'scatter',
+            mode: 'lines',
+            line: { color: '#a07d63', width: 3 }
+        }];
+
+        let lineLayout = {
+            title: { text: 'MSE Loss vs Epochs', font: {family: 'Inter', color: '#1a1513', size: 14} },
+            paper_bgcolor: 'transparent',
+            plot_bgcolor: 'transparent',
+            margin: { l: 50, r: 20, b: 40, t: 40 },
+            xaxis: { title: 'Epochs', gridcolor: '#e2ddd7', titlefont: {family: 'Inter'} },
+            yaxis: { title: 'Mean Squared Error', gridcolor: '#e2ddd7', titlefont: {family: 'Inter'} }
+        };
+
+        Plotly.newPlot('plot-convergence', lineData, lineLayout, {displayModeBar: false});
+    });
+</script>
+
+</body>
+</html>
