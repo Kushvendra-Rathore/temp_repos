@@ -110,7 +110,7 @@
 
     /* Certificate Media Frame */
     .certificate-media {
-        margin: 0 0 2rem 0;
+        margin: 0;
         border: 12px solid #f5f0ec; /* Creates a clean "frame" look */
         border-radius: 12px;
         overflow: hidden;
@@ -138,36 +138,6 @@
         color: var(--text-muted);
         border-top: 1px solid var(--border-color);
         font-weight: 500;
-    }
-
-    /* Metadata Grid */
-    .metadata-grid {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-        gap: 1.5rem;
-        background: #fdfbf7;
-        padding: 1.5rem;
-        border-radius: 12px;
-        border: 1px solid var(--border-color);
-    }
-
-    .meta-item {
-        display: flex;
-        flex-direction: column;
-        gap: 6px;
-    }
-
-    .meta-item strong {
-        font-size: 0.85rem;
-        text-transform: uppercase;
-        letter-spacing: 0.1em;
-        color: var(--primary-brown);
-    }
-
-    .meta-item span {
-        font-size: 1rem;
-        color: var(--text-dark);
-        font-weight: 600;
     }
 
     /* --- GLOBAL ENTRANCE ANIMATIONS --- */
@@ -211,21 +181,6 @@
             <img src="IBM SE Certificate.jpeg" alt="IBM SE Certificate" loading="lazy">
             <figcaption>Official IBM Software Engineering Certification</figcaption>
         </figure>
-
-        <div class="metadata-grid">
-            <div class="meta-item">
-                <strong>Issued By</strong>
-                <span>IBM</span>
-            </div>
-            <div class="meta-item">
-                <strong>Credential Area</strong>
-                <span>Software Engineering</span>
-            </div>
-            <div class="meta-item">
-                <strong>Format</strong>
-                <span>Verified Image (JPEG)</span>
-            </div>
-        </div>
     </div>
 
 </div>
