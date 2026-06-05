@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Certificate Presentation</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+<style>
+    :root {
+        --bg-main: #faf8f5; 
+        --primary-brown: #a07d63; 
+        --text-dark: #1a1513;
+        --text-muted: #665952;
+        --border-color: #e2ddd7;
+        --card-bg: #ffffff;
+        
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+    }
+
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body, html {
+        width: 100%;
+        background-color: var(--bg-main);
+        color: var(--text-dark);
+        line-height: 1.6;
+        padding-bottom: 3rem;
+    }
+
+    .container {
+        max-width: 1100px;
+        margin: 0 auto;
+        padding: 4rem 1.5rem;
+        display: flex;
+        flex-direction: column;
+        gap: 2rem;
+    }
+
+    /* Page Header */
+    .page-header {
+        text-align: center;
+        margin-bottom: 2rem;
+    }
+
+    .page-header h1 {
+        font-weight: 800;
+        font-size: 2.8rem;
+        color: var(--text-dark);
+        letter-spacing: -0.03em;
+        margin-bottom: 0.5rem;
+    }
+
+    .page-header p {
+        color: var(--primary-brown);
+        font-size: 1.1rem;
+        font-weight: 600;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+    }
+
+    /* Certificate Card */
+    .certificate-card {
+        background: var(--card-bg);
+        border: 1px solid var(--border-color);
+        border-radius: 16px;
+        padding: 2.5rem;
+        box-shadow: 0 4px 20px rgba(0,0,0,0.02);
+        max-width: 900px;
+        margin: 0 auto;
+        width: 100%;
+        /* Enhanced hover transition */
+        transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1), border-color 0.3s ease;
+    }
+
+    .certificate-card:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 12px 35px rgba(160, 125, 99, 0.15);
+        border-color: var(--primary-brown);
+    }
+
+    .certificate-header {
+        display: flex;
+        align-items: center;
+        gap: 12px;
+        margin-bottom: 1.5rem;
+        border-bottom: 1px solid var(--border-color);
+        padding-bottom: 1rem;
+    }
+
+    .certificate-header h2 {
+        font-size: 1.4rem;
+        font-weight: 700;
+        color: var(--text-dark);
+    }
+
+    .icon {
+        width: 32px;
+        height: 32px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 8px;
+        background: rgba(160, 125, 99, 0.1); 
+        color: var(--primary-brown);
+    }
+
+    /* Certificate Media Frame */
+    .certificate-media {
+        margin: 0 0 2rem 0;
+        border: 12px solid #f5f0ec; /* Creates a clean "frame" look */
+        border-radius: 12px;
+        overflow: hidden;
+        background: #e2ddd7;
+        position: relative;
+    }
+
+    .certificate-media img {
+        width: 100%;
+        height: auto;
+        display: block;
+        /* Slow zoom effect on image */
+        transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    }
+
+    .certificate-media:hover img {
+        transform: scale(1.03);
+    }
+
+    .certificate-media figcaption {
+        background: #fdfbf7;
+        padding: 1rem;
+        text-align: center;
+        font-size: 0.95rem;
+        color: var(--text-muted);
+        border-top: 1px solid var(--border-color);
+        font-weight: 500;
+    }
+
+    /* Metadata Grid */
+    .metadata-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+        gap: 1.5rem;
+        background: #fdfbf7;
+        padding: 1.5rem;
+        border-radius: 12px;
+        border: 1px solid var(--border-color);
+    }
+
+    .meta-item {
+        display: flex;
+        flex-direction: column;
+        gap: 6px;
+    }
+
+    .meta-item strong {
+        font-size: 0.85rem;
+        text-transform: uppercase;
+        letter-spacing: 0.1em;
+        color: var(--primary-brown);
+    }
+
+    .meta-item span {
+        font-size: 1rem;
+        color: var(--text-dark);
+        font-weight: 600;
+    }
+
+    /* --- GLOBAL ENTRANCE ANIMATIONS --- */
+    @keyframes fadeSlideUp {
+        0% {
+            opacity: 0;
+            transform: translateY(30px);
+        }
+        100% {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .fade-in {
+        opacity: 0;
+        animation: fadeSlideUp 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+    }
+
+</style>
+</head>
+<body>
+
+<div class="container">
+    
+    <div class="page-header fade-in" style="animation-delay: 0.1s;">
+        <h1>Certificate</h1>
+        <p>Professional Recognition</p>
+    </div>
+
+    <div class="certificate-card fade-in" style="animation-delay: 0.2s;">
+        <div class="certificate-header">
+            <div class="icon">
+                <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path><polyline points="22 4 12 14.01 9 11.01"></polyline></svg>
+            </div>
+            <h2>IBM Software Engineering</h2>
+        </div>
+        
+        <figure class="certificate-media">
+            <!-- Automatically targets the requested JPEG file -->
+            <img src="IBM SE Certificate.jpeg" alt="IBM SE Certificate" loading="lazy">
+            <figcaption>Official IBM Software Engineering Certification</figcaption>
+        </figure>
+
+        <div class="metadata-grid">
+            <div class="meta-item">
+                <strong>Issued By</strong>
+                <span>IBM</span>
+            </div>
+            <div class="meta-item">
+                <strong>Credential Area</strong>
+                <span>Software Engineering</span>
+            </div>
+            <div class="meta-item">
+                <strong>Format</strong>
+                <span>Verified Image (JPEG)</span>
+            </div>
+        </div>
+    </div>
+
+</div>
+
+</body>
+</html>
