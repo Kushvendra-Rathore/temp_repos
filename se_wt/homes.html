@@ -75,6 +75,26 @@
         z-index: -1;
     }
 
+    .hero-image-wrapper {
+        margin: 0 auto 3rem;
+        position: relative;
+        z-index: 1;
+    }
+
+    .hero-photo {
+        width: 220px;
+        height: 220px;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 8px solid var(--card-bg);
+        box-shadow: 0 20px 40px rgba(0,0,0,0.08);
+        transition: transform 0.4s ease;
+    }
+
+    .hero-photo:hover {
+        transform: scale(1.05);
+    }
+
     .main-title {
         font-family: 'Inter', sans-serif;
         font-weight: 800;
@@ -417,6 +437,10 @@
         <div class="hero-shape"></div>
         <h1 class="main-title">SE & WT<br>Portfolio</h1>
         
+        <div class="hero-image-wrapper">
+            <img src="My_photo.jpeg" alt="Kushvendra Singh Rathore" class="hero-photo" onerror="this.onerror=null; this.src='https://github.com/Kushvendra-Rathore.png';">
+        </div>
+
         <div class="hero-intro">
             <h2>Hi, I'm <span class="highlight-name">Kushvendra Singh Rathore</span></h2>
             <h3>Welcome to my portfolio</h3>
@@ -475,7 +499,7 @@
             <div class="expertise-category" style="margin-bottom: 0;">
                 <h3>Databases & Infrastructure</h3>
                 <div class="pill-container">
-                    <span class="pill">MySQL</span>
+                    <span class="pill">MongoDB</span>
                     <span class="pill">Node.js</span>
                 </div>
             </div>
