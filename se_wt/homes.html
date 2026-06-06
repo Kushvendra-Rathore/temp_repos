@@ -333,6 +333,21 @@
         margin-bottom: 8px;
     }
 
+    .project-link {
+        display: inline-flex;
+        align-items: center;
+        font-size: 0.9rem;
+        font-weight: 600;
+        color: var(--primary-brown);
+        text-decoration: none;
+        transition: color 0.3s ease, transform 0.3s ease;
+    }
+
+    .project-link:hover {
+        color: var(--accent-red);
+        transform: translateX(4px);
+    }
+
     /* --- BEYOND THE SCREEN SECTION --- */
     .personal-grid {
         display: grid;
@@ -521,6 +536,9 @@
                         <span class="project-pill">MERN Stack</span>
                         <span class="project-pill">Authentication</span>
                         <span class="project-pill">API Routing</span>
+                    </div>
+                    <div style="margin-top: 1.5rem;">
+                        <a href="https://klx-nine.vercel.app/" target="_blank" rel="noopener noreferrer" class="project-link">View Live Website &rarr;</a>
                     </div>
                 </div>
             </div>
